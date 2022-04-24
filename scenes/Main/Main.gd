@@ -31,16 +31,8 @@ func _on_SpawnEnemyTimer_timeout():
 	
 	var camera_rect = get_camera_rect(player.get_node("Camera2D"))
 	
-	print(camera_rect)
-	
-	
 	var min_x = camera_rect.x; var min_y = camera_rect.y
 	var max_x = camera_rect.w; var max_y = camera_rect.h
-	
-	print(min_x)
-	print(min_y)
-	print(max_x)
-	print(max_y)
 	
 	var edge = randi() % 4
 	

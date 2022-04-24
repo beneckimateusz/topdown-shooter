@@ -1,18 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/MainMenu/MainMenu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Main/Main.gd" type="Script" id=2]
 [ext_resource path="res://scenes/Player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://maps/Map01/Map01.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Enemy/Enemy.tscn" type="PackedScene" id=5]
-
-[sub_resource type="GDScript" id=2]
-
-[sub_resource type="Curve2D" id=1]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -3, -2, 0, 0, 0, 0, 1023, -4, 0, 0, 0, 0, 1025, 598, 0, 0, 0, 0, -3, 597, 0, 0, 0, 0, -3, -2 )
-}
-script = SubResource( 2 )
 
 [node name="Main" type="Node"]
 script = ExtResource( 2 )
@@ -24,13 +16,6 @@ monster_scene = ExtResource( 5 )
 
 [node name="SpawnEnemyTimer" type="Timer" parent="."]
 wait_time = 0.3
-
-[node name="ScreenEdgePath" type="Path2D" parent="."]
-curve = SubResource( 1 )
-
-[node name="Sampler" type="PathFollow2D" parent="ScreenEdgePath"]
-position = Vector2( -3, -2 )
-rotation = -0.00194927
 
 [connection signal="start_game" from="MainMenu" to="." method="new_game"]
 [connection signal="timeout" from="SpawnEnemyTimer" to="." method="_on_SpawnEnemyTimer_timeout"]

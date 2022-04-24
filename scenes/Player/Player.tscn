@@ -35,3 +35,5 @@ position = Vector2( 60, 0 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 2, 2 )
+
+[connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
