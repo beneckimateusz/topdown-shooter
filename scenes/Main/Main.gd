@@ -26,9 +26,7 @@ func new_game():
 
 
 func _on_SpawnEnemyTimer_timeout():
-	var sampler = get_node("ScreenEdgePath/Sampler")
-	sampler.offset = randi()
-	
+
 	var camera_rect = get_camera_rect(player.get_node("Camera2D"))
 	
 	var min_x = camera_rect.x; var min_y = camera_rect.y
