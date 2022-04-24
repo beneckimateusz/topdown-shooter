@@ -4,19 +4,17 @@ signal health_changed
 signal dead
 
 export (PackedScene) var Bullet
-export (int) var speed = 200 # (pixels/sec)
-export (float) var rotation_speed = 1
+export (int) var speed = 300 # (pixels/sec)
+export (float) var rotation_speed = 2
 export (float) var gun_cooldown = 0.4
 export (int) var health = 100
 
-var screen_size
 var velocity
 var can_shoot = true
 var alive = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	screen_size = get_viewport_rect().size
 	$GunTimer.wait_time = gun_cooldown
 	
 func control(delta):
@@ -40,9 +38,15 @@ func control(delta):
 		
 	velocity = velocity.rotated(rotation) * delta
 
+func set_camera_limits(map):
+	var map_limits = map.get_node("Ground").get_used_rect()
+	var map_cell_size = map.get_node("Ground").cell_size
+	
+	$Camera2D.limit_left = map_limits.position.x * map_cell_size.x
+	$Camera2D.limit_right = map_limits.end.x * map_cell_size.x
+	$Camera2D.limit_top = map_limits.position.y * map_cell_size.y
+	$Camera2D.limit_bottom = map_limits.end.y * map_cell_size.y
+	
 func _process(delta):
 	control(delta)
-		
 	position += velocity
-	position.x = clamp(position.x, 0, screen_size.x)
-	position.y = clamp(position.y, 0, screen_size.y)
