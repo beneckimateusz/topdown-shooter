@@ -5,6 +5,7 @@ export (PackedScene) var map_scene
 export(PackedScene) var monster_scene
 
 var player
+var map
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,21 +13,21 @@ func _ready():
 
 func new_game():
 	print("Main scene started a new game")
-	
 
-	var map = map_scene.instance()
+	map = map_scene.instance()
 	add_child(map)
 	
-	player = player_scene.instance()
-	player.set_camera_limits(map)
-	
+	spawn_player()
 	map.add_child(player)
 	
 	$SpawnEnemyTimer.start()
-
+	
+func spawn_player():
+	player = player_scene.instance()
+	player.set_camera_limits(map)
+	player.connect("shoot", self, "_on_Player_shoot")
 
 func _on_SpawnEnemyTimer_timeout():
-
 	var camera_rect = get_camera_rect(player.get_node("Camera2D"))
 	
 	var min_x = camera_rect.x; var min_y = camera_rect.y
@@ -54,7 +55,6 @@ func _on_SpawnEnemyTimer_timeout():
 	spawned_enemy.position = Vector2(x, y)
 	spawned_enemy.init(player)
 
-
 func get_camera_rect(camera):
 	var rect = {"x": 0, "y": 0, "w": 0, "h": 0}
 	var cameraPos = camera.get_camera_screen_center()
@@ -64,3 +64,8 @@ func get_camera_rect(camera):
 	rect.w = cameraPos.x + viewportRect.x
 	rect.h = cameraPos.y + viewportRect.y
 	return rect
+
+func _on_Player_shoot(_bullet, _position, _direction):
+	var bullet = _bullet.instance()
+	add_child(bullet)
+	bullet.init(_position, _direction)
