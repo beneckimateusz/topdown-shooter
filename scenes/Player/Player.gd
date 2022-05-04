@@ -50,3 +50,11 @@ func set_camera_limits(map):
 func _process(delta):
 	control(delta)
 	position += velocity
+	
+
+
+func _on_Player_body_entered(enemy):
+	health -= 10
+	enemy.collide_with_player()
+	
+	
