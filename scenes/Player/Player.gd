@@ -40,7 +40,7 @@ func control(delta):
 	velocity = velocity.rotated(rotation) * delta
 	
 	# shooting
-	if Input.is_action_just_pressed("click"):
+	if Input.is_action_pressed("click"):
 		shoot()
 
 func shoot():

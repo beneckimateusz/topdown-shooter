@@ -10,7 +10,7 @@ extents = Vector2( 15.5, 12 )
 [node name="PlayerBullet" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 speed = 750
-damage = 10
+damage = 50
 lifetime = 1.0
 
 [node name="Sprite" parent="." index="0"]
