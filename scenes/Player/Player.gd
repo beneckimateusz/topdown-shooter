@@ -1,5 +1,6 @@
 extends Area2D
 
+signal shoot
 signal health_changed
 signal dead
 
@@ -37,6 +38,18 @@ func control(delta):
 		velocity.x = -speed / 2
 		
 	velocity = velocity.rotated(rotation) * delta
+	
+	# shooting
+	if Input.is_action_pressed("click"):
+		shoot()
+
+func shoot():
+	if can_shoot:
+		can_shoot = false
+		$GunTimer.start()
+		
+		var dir = Vector2(1, 0).rotated($Barrel.global_rotation)
+		emit_signal("shoot", Bullet, $Barrel/Muzzle.global_position, dir)
 
 func set_camera_limits(map):
 	var map_limits = map.get_node("Ground").get_used_rect()
@@ -48,13 +61,14 @@ func set_camera_limits(map):
 	$Camera2D.limit_bottom = map_limits.end.y * map_cell_size.y
 	
 func _process(delta):
+	if not alive:
+		return
 	control(delta)
 	position += velocity
-	
-
 
 func _on_Player_body_entered(enemy):
 	health -= 10
 	enemy.collide_with_player()
-	
-	
+
+func _on_GunTimer_timeout():
+	can_shoot = true

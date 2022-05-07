@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
-var speed = 50
+export (int) var health
+export (int) var speed
 var target
 
 # Called when the node enters the scene tree for the first time.
@@ -21,4 +22,10 @@ func _physics_process(delta):
 #	pass
 
 func collide_with_player():
-	queue_free()
+#	queue_free()
+	pass
+
+func take_damage(damage):
+	health -= damage
+	if health <= 0:
+		queue_free()

@@ -6,8 +6,10 @@
 extents = Vector2( 20, 20 )
 
 [node name="Enemy" type="KinematicBody2D"]
-collision_mask = 0
+collision_layer = 2
 script = ExtResource( 1 )
+health = 100
+speed = 50
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_right = 40.0
