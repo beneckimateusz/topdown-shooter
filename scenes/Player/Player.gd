@@ -44,7 +44,7 @@ func control(delta):
 		shoot()
 
 func shoot():
-	if can_shoot:
+	if alive && can_shoot:
 		can_shoot = false
 		$GunTimer.start()
 		
@@ -69,6 +69,11 @@ func _process(delta):
 func _on_Player_body_entered(enemy):
 	health -= 10
 	enemy.collide_with_player()
+	
+	if (health <= 0):
+		emit_signal("dead")
+		alive = false
+		hide()
 
 func _on_GunTimer_timeout():
 	can_shoot = true
