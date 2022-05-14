@@ -68,12 +68,19 @@ func _process(delta):
 
 func _on_Player_body_entered(enemy):
 	health -= 10
-	enemy.collide_with_player()
 	
-	if (health <= 0):
-		emit_signal("dead")
-		alive = false
-		hide()
+	var enemy_collision_layer = enemy.get_collision_layer()
+	
+	if enemy_collision_layer == 2:
+		# collided with enemy
+		enemy.collide_with_player()
+	
+		if (health <= 0):
+			emit_signal("dead")
+			alive = false
+			hide()
+	else:
+		print("EXP +1")
 
 func _on_GunTimer_timeout():
 	can_shoot = true
