@@ -4,6 +4,7 @@ export (PackedScene) var player_scene
 export (PackedScene) var map_scene
 export (PackedScene) var monster_scene
 export (PackedScene) var exp_orb_scene
+export (PackedScene) var health_bar_scene
 
 var player
 var map
@@ -28,6 +29,12 @@ func spawn_player():
 	player.set_camera_limits(map)
 	player.connect("shoot", self, "_on_Player_shoot")
 	player.connect("dead", self, "_on_Player_dead")
+	
+	var health_bar = health_bar_scene.instance()
+	health_bar.init(player)
+	add_child(health_bar)
+	
+	$ExperienceBar.init(player)
 
 func _on_SpawnEnemyTimer_timeout():
 	var camera_rect = get_camera_rect(player.get_node("Camera2D"))
@@ -57,6 +64,7 @@ func _on_SpawnEnemyTimer_timeout():
 	spawned_enemy.position = Vector2(x, y)
 	spawned_enemy.init(player)
 	spawned_enemy.connect("dead", self, "_on_Enemy_dead")
+	
 
 func get_camera_rect(camera):
 	var rect = {"x": 0, "y": 0, "w": 0, "h": 0}
