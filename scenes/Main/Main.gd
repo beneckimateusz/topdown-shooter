@@ -26,6 +26,7 @@ func spawn_player():
 	player = player_scene.instance()
 	player.set_camera_limits(map)
 	player.connect("shoot", self, "_on_Player_shoot")
+	player.connect("dead", self, "_on_Player_dead")
 
 func _on_SpawnEnemyTimer_timeout():
 	var camera_rect = get_camera_rect(player.get_node("Camera2D"))
@@ -69,3 +70,7 @@ func _on_Player_shoot(_bullet, _position, _direction):
 	var bullet = _bullet.instance()
 	add_child(bullet)
 	bullet.init(_position, _direction)
+
+func _on_Player_dead():
+	print("GAME OVER")
+	$SpawnEnemyTimer.stop()
