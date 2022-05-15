@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal dead
+
 export (int) var health
 export (int) var speed
 export (int) var knockback_distance
@@ -39,6 +41,7 @@ func collide_with_player():
 func take_damage(damage):
 	health -= damage
 	if health <= 0:
+		emit_signal("dead", position)
 		queue_free()
 		
 func _on_Player_dead():

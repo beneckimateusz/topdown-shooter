@@ -14,6 +14,10 @@ var velocity
 var can_shoot = true
 var alive = true
 
+var level = 1
+var current_exp = 0
+var next_level_threshold = 100
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$GunTimer.wait_time = gun_cooldown
@@ -68,12 +72,24 @@ func _process(delta):
 
 func _on_Player_body_entered(enemy):
 	health -= 10
+	
 	enemy.collide_with_player()
 	
 	if (health <= 0):
 		emit_signal("dead")
 		alive = false
 		hide()
+			
+func _on_Player_area_entered(area: Area2D):
+	# check if we collided with the experience orb
+	if not area.get_collision_layer_bit(3): return
+	
+	current_exp += 10
+	if current_exp >= next_level_threshold:
+		current_exp -= next_level_threshold
+		level += 1
 
 func _on_GunTimer_timeout():
 	can_shoot = true
+
+
