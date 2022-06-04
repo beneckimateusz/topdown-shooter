@@ -20,13 +20,12 @@ func new_game():
 	add_child(map)
 	
 	spawn_player()
-	map.add_child(player)
+	map.add_player(player)
 	
 	$SpawnEnemyTimer.start()
 	
 func spawn_player():
 	player = player_scene.instance()
-	player.set_camera_limits(map)
 	player.connect("shoot", self, "_on_Player_shoot")
 	player.connect("dead", self, "_on_Player_dead")
 	
