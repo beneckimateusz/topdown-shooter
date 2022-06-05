@@ -54,15 +54,6 @@ func shoot():
 		
 		var dir = Vector2(1, 0).rotated($Barrel.global_rotation)
 		emit_signal("shoot", Bullet, $Barrel/Muzzle.global_position, dir)
-
-func set_camera_limits(map):
-	var map_limits = map.get_node("Ground").get_used_rect()
-	var map_cell_size = map.get_node("Ground").cell_size
-	
-	$Camera2D.limit_left = map_limits.position.x * map_cell_size.x
-	$Camera2D.limit_right = map_limits.end.x * map_cell_size.x
-	$Camera2D.limit_top = map_limits.position.y * map_cell_size.y
-	$Camera2D.limit_bottom = map_limits.end.y * map_cell_size.y
 	
 func _process(delta):
 	if not alive:
