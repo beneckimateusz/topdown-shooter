@@ -34,6 +34,7 @@ func spawn_player():
 	add_child(health_bar)
 	
 	$ExperienceBar.init(player)
+	$GameTimer.start()
 
 func _on_SpawnEnemyTimer_timeout():
 	var camera_rect = get_camera_rect(player.get_node("Camera2D"))
@@ -83,6 +84,7 @@ func _on_Player_shoot(_bullet, _position, _direction):
 func _on_Player_dead():
 	print("GAME OVER")
 	$SpawnEnemyTimer.stop()
+	$GameTimer.stop()
 	
 func _on_Enemy_dead(enemy_pos: Vector2):
 	var exp_orb = exp_orb_scene.instance()
