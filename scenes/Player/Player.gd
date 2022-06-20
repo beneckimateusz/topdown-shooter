@@ -51,6 +51,7 @@ func shoot():
 	if alive && can_shoot:
 		can_shoot = false
 		$GunTimer.start()
+		$GunStream.play()
 		
 		var dir = Vector2(1, 0).rotated($Barrel.global_rotation)
 		emit_signal("shoot", Bullet, $Barrel/Muzzle.global_position, dir)
@@ -74,11 +75,12 @@ func _on_Player_body_entered(enemy):
 func _on_Player_area_entered(area: Area2D):
 	# check if we collided with the experience orb
 	if not area.get_collision_layer_bit(3): return
-	
+
 	current_exp += 10
 	if current_exp >= next_level_threshold:
 		current_exp -= next_level_threshold
 		level += 1
+		$LevelUpStream.play()
 
 func _on_GunTimer_timeout():
 	can_shoot = true

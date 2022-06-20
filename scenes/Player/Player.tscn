@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/onlyObjects_retina_rotated.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://scenes/Bullet/PlayerBullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://sounds/Explosion 1.wav" type="AudioStream" id=4]
+[ext_resource path="res://sounds/LevelUp.wav" type="AudioStream" id=5]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 42, 38 )
@@ -38,6 +40,13 @@ position = Vector2( 60, 0 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 2, 2 )
+
+[node name="GunStream" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -8.0
+
+[node name="LevelUpStream" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
 
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]

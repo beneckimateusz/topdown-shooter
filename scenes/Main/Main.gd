@@ -91,6 +91,8 @@ func _on_Enemy_dead(enemy_pos: Vector2):
 	exp_orb.init(enemy_pos)
 	exp_orb.connect("collect", self, "_on_ExperienceOrb_collect")
 	add_child(exp_orb)
+	$EnemyDeadStream.play()
 	
 func _on_ExperienceOrb_collect():
-	pass
+	$CollectStream.play()
+	print("essa")
